@@ -18,7 +18,9 @@
 	"observability": {
 		"enabled": true
 	},
-
+	"placement": {
+		"mode": "smart"
+	},
 	/**
 	 * Service Bindings (communicate between multiple Workers)
 	 * https://developers.cloudflare.com/workers/wrangler/configuration/#service-bindings
