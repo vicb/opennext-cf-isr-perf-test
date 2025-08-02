@@ -1,0 +1,101 @@
+/**
+ * For more details on how to configure Wrangler, refer to:
+ * https://developers.cloudflare.com/workers/wrangler/configuration/
+ */
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "my-next-app",
+	"main": ".open-next/worker.js",
+	"compatibility_date": "2025-03-01",
+	"compatibility_flags": [
+		"nodejs_compat",
+		"global_fetch_strictly_public"
+	],
+	"assets": {
+		"binding": "ASSETS",
+		"directory": ".open-next/assets"
+	},
+	"observability": {
+		"enabled": true
+	},
+
+	/**
+	 * Service Bindings (communicate between multiple Workers)
+	 * https://developers.cloudflare.com/workers/wrangler/configuration/#service-bindings
+	 */
+	"services": [
+		{
+			"binding": "WORKER_SELF_REFERENCE",
+			"service": "my-next-app"
+		}
+	],
+
+	/**
+	 * KV Namespaces for incremental caching
+	 * https://developers.cloudflare.com/workers/wrangler/configuration/#kv-namespaces
+	 */
+	"kv_namespaces": [
+		{
+			"binding": "NEXT_INC_CACHE_KV",
+			"id": "56b313314c5147b48a06d71592df402b"
+		}
+	],
+
+	/**
+	 * R2 Buckets (keeping for potential future use, but KV is now primary cache)
+	 * https://developers.cloudflare.com/workers/wrangler/configuration/#r2-buckets
+	 */
+	// "r2_buckets": [
+	//	{
+	//		"binding": "NEXT_INC_CACHE_R2_BUCKET", 
+	//		"bucket_name": "perftest-next-cache-r2"
+	//	}
+	// ],
+
+	/**
+	 * D1 Databases for tag cache
+	 * https://developers.cloudflare.com/workers/wrangler/configuration/#d1-databases
+	 */
+	"d1_databases": [
+		{
+			"binding": "NEXT_TAG_CACHE_D1",
+			"database_name": "perftest_next_tag_cache",
+			"database_id": "ac2650d8-d1c3-4320-9919-12d1f7add8d2"
+		}
+	],
+
+	/**
+	 * Durable Objects for queue and tag cache
+	 * https://developers.cloudflare.com/workers/wrangler/configuration/#durable-objects
+	 */
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "NEXT_CACHE_DO_QUEUE",
+				"class_name": "DOQueueHandler"
+			},
+			{
+				"name": "NEXT_TAG_CACHE_DO_SHARDED",
+				"class_name": "DOShardedTagCache"
+			},
+			{
+				"name": "NEXT_CACHE_DO_PURGE",
+				"class_name": "BucketCachePurge"
+			}
+		]
+	},
+
+	/**
+	 * Migrations for Durable Objects
+	 */
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": [
+				"DOQueueHandler",
+				"DOShardedTagCache",
+				"BucketCachePurge"
+			]
+		}
+	]
+}
