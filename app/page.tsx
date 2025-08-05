@@ -75,6 +75,7 @@ export default function Home() {
                   <Link
                     key={slug}
                     href={`/demo/${slug}`}
+                    prefetch={false}
                     className="bg-green-100 hover:bg-green-200 dark:bg-green-900 dark:hover:bg-green-800 px-3 py-2 rounded-md text-sm transition-colors"
                   >
                     /demo/{slug}
@@ -90,6 +91,7 @@ export default function Home() {
                   <Link
                     key={slug}
                     href={`/demo/${slug}`}
+                    prefetch={false}
                     className="bg-blue-100 hover:bg-blue-200 dark:bg-blue-900 dark:hover:bg-blue-800 px-3 py-2 rounded-md text-sm transition-colors"
                   >
                     /demo/{slug}

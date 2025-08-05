@@ -116,12 +116,14 @@ export default async function Page({ params }: PageProps) {
       <div className="flex gap-4 flex-wrap">
         <Link
           href="/"
+          prefetch={false}
           className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors"
         >
           ← Back to Home
         </Link>
         <Link
           href={`/demo/${slug}`}
+          prefetch={false}
           className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-md transition-colors"
         >
           🔄 Refresh Page
