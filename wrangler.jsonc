@@ -11,6 +11,12 @@
 		"nodejs_compat",
 		"global_fetch_strictly_public"
 	],
+	"routes": [
+		{
+		  "pattern": "isr-perf-test.catalyst-canary.store",
+		  "custom_domain": true
+		}
+	  ],
 	"assets": {
 		"binding": "ASSETS",
 		"directory": ".open-next/assets"
@@ -47,12 +53,12 @@
 	 * R2 Buckets (keeping for potential future use, but KV is now primary cache)
 	 * https://developers.cloudflare.com/workers/wrangler/configuration/#r2-buckets
 	 */
-	// "r2_buckets": [
-	//	{
-	//		"binding": "NEXT_INC_CACHE_R2_BUCKET", 
-	//		"bucket_name": "perftest-next-cache-r2"
-	//	}
-	// ],
+	"r2_buckets": [
+		{
+			"binding": "NEXT_INC_CACHE_R2_BUCKET", 
+			"bucket_name": "perftest-next-cache-r2"
+		}
+	],
 
 	/**
 	 * D1 Databases for tag cache

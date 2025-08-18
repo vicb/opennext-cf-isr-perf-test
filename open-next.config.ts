@@ -5,13 +5,16 @@ import doShardedTagCache from "@opennextjs/cloudflare/overrides/tag-cache/do-sha
 import { purgeCache } from "@opennextjs/cloudflare/overrides/cache-purge/index";
 
 // Using KV incremental cache as requested - much faster than R2!
-import kvIncrementalCache from "@opennextjs/cloudflare/overrides/incremental-cache/kv-incremental-cache";
+import r2IncrementalCache from "@opennextjs/cloudflare/overrides/incremental-cache/r2-incremental-cache";
+import { withRegionalCache } from "@opennextjs/cloudflare/overrides/incremental-cache/regional-cache";
 
 export default defineCloudflareConfig({
   // Large site configuration with KV incremental cache for maximum performance
   // KV already uses Cloudflare's Tiered Cache globally - no regional cache needed
-  incrementalCache: kvIncrementalCache,
-  
+	incrementalCache: withRegionalCache(r2IncrementalCache, {
+		mode: "long-lived",
+		bypassTagCacheOnCacheHit: true,
+	}),
   // Durable Objects queue for ISR revalidation
   queue: doQueue,
   
