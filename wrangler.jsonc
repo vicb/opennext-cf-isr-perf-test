@@ -1,22 +1,12 @@
-/**
- * For more details on how to configure Wrangler, refer to:
- * https://developers.cloudflare.com/workers/wrangler/configuration/
- */
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "opennext-cf-isr-perf-test",
+	"name": "bigc",
 	"main": ".open-next/worker.js",
-	"compatibility_date": "2025-03-01",
+	"compatibility_date": "2025-08-01",
 	"compatibility_flags": [
 		"nodejs_compat",
 		"global_fetch_strictly_public"
 	],
-	"routes": [
-		{
-		  "pattern": "isr-perf-test.catalyst-canary.store",
-		  "custom_domain": true
-		}
-	  ],
 	"assets": {
 		"binding": "ASSETS",
 		"directory": ".open-next/assets"
@@ -27,55 +17,35 @@
 	"placement": {
 		"mode": "smart"
 	},
-	/**
-	 * Service Bindings (communicate between multiple Workers)
-	 * https://developers.cloudflare.com/workers/wrangler/configuration/#service-bindings
-	 */
 	"services": [
 		{
 			"binding": "WORKER_SELF_REFERENCE",
-			"service": "opennext-cf-isr-perf-test"
+			"service": "bigc"
 		}
 	],
 
-	/**
-	 * KV Namespaces for incremental caching
-	 * https://developers.cloudflare.com/workers/wrangler/configuration/#kv-namespaces
-	 */
 	"kv_namespaces": [
 		{
 			"binding": "NEXT_INC_CACHE_KV",
-			"id": "56b313314c5147b48a06d71592df402b"
+			"id": "2a2e251c0bcb47aeb476d80bfaf94d38"
 		}
 	],
 
-	/**
-	 * R2 Buckets (keeping for potential future use, but KV is now primary cache)
-	 * https://developers.cloudflare.com/workers/wrangler/configuration/#r2-buckets
-	 */
 	"r2_buckets": [
 		{
-			"binding": "NEXT_INC_CACHE_R2_BUCKET", 
-			"bucket_name": "perftest-next-cache-r2"
+			"binding": "NEXT_INC_CACHE_R2_BUCKET",
+			"bucket_name": "bigc-perf-cache"
 		}
 	],
 
-	/**
-	 * D1 Databases for tag cache
-	 * https://developers.cloudflare.com/workers/wrangler/configuration/#d1-databases
-	 */
 	"d1_databases": [
 		{
 			"binding": "NEXT_TAG_CACHE_D1",
-			"database_name": "perftest_next_tag_cache",
-			"database_id": "ac2650d8-d1c3-4320-9919-12d1f7add8d2"
+			"database_name": "bigc-tag-cache",
+			"database_id": "2351abc2-1653-4b7a-b5f4-144cef2b239b"
 		}
 	],
 
-	/**
-	 * Durable Objects for queue and tag cache
-	 * https://developers.cloudflare.com/workers/wrangler/configuration/#durable-objects
-	 */
 	"durable_objects": {
 		"bindings": [
 			{
@@ -93,9 +63,6 @@
 		]
 	},
 
-	/**
-	 * Migrations for Durable Objects
-	 */
 	"migrations": [
 		{
 			"tag": "v1",
