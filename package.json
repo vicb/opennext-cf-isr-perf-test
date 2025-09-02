@@ -15,7 +15,8 @@
 		"@opennextjs/cloudflare": "https://pkg.pr.new/@opennextjs/cloudflare@850",
 		"next": "15.3.5",
 		"react": "^19.0.0",
-		"react-dom": "^19.0.0"
+		"react-dom": "^19.0.0",
+		"vercel": "^46.1.0"
 	},
 	"devDependencies": {
 		"@eslint/eslintrc": "^3",
