@@ -17,6 +17,9 @@
 	"placement": {
 		"mode": "smart"
 	},
+	// Does not affect perf
+	// "minify": true,
+	// "keep_names": false,
 	"services": [
 		{
 			"binding": "WORKER_SELF_REFERENCE",
