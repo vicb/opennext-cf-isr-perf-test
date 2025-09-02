@@ -1,0 +1,33 @@
+{
+  "main": "./multi-worker/server.js",
+  "name": "main-server",
+  "compatibility_date": "2025-08-01",
+  "compatibility_flags": ["nodejs_compat", "allow_importable_env", "global_fetch_strictly_public"],
+  "r2_buckets": [
+    {
+      "binding": "NEXT_INC_CACHE_R2_BUCKET",
+      "bucket_name": "bigc-perf-cache-multi-worker",
+    },
+  ],
+  "services": [
+    {
+      "binding": "WORKER_SELF_REFERENCE",
+      // Note: "middleware" is intentional here
+      "service": "middleware",
+    },
+  ],
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "NEXT_TAG_CACHE_DO_SHARDED",
+        "class_name": "DOShardedTagCache",
+        "script_name": "middleware",
+      },
+      {
+        "name": "NEXT_CACHE_DO_QUEUE",
+        "class_name": "DOQueueHandler",
+        "script_name": "middleware",
+      },
+    ],
+  },
+}

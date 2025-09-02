@@ -7,8 +7,9 @@
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint",
-		"deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
-		"preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+		"worker:build": "opennextjs-cloudflare build --skipWranglerConfigCheck",
+		"deploy": "opennextjs-cloudflare build --skipWranglerConfigCheck && opennextjs-cloudflare deploy",
+		"preview": "opennextjs-cloudflare build --skipWranglerConfigCheck && opennextjs-cloudflare preview",
 		"cf-typegen": "wrangler types --env-interface CloudflareEnv ./cloudflare-env.d.ts"
 	},
 	"dependencies": {
