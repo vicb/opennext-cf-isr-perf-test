@@ -1,7 +1,8 @@
 // app/demo/[slug]/page.tsx
 import Link from "next/link";
 
-export const revalidate = 10; // Revalidate the page after 10 seconds
+// Revalidation time (seconds)
+export const revalidate = 30;
 
 const slugsToPrefetch = [
     '1',
@@ -30,12 +31,12 @@ interface PageProps {
 export default async function Page({ params }: PageProps) {
   // Await params to get the actual slug value
   const { slug } = await params;
-  
+
   // Fetch data from your deployed Google Cloud Function API
   const res = await fetch(
     `https://isr-backend-api-451041921684.us-central1.run.app/api/fakedata/${slug}`,
     {
-      next: { revalidate: 10 },
+      next: { revalidate: 20 },
     }
   );
   if (!res.ok) {
@@ -52,8 +53,8 @@ export default async function Page({ params }: PageProps) {
       <div className="mb-6">
         <h1 className="text-3xl font-bold mb-2">ISR Diagnostics for <code className="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">{slug}</code></h1>
         <div className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${
-          isPrefetched 
-            ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' 
+          isPrefetched
+            ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
             : 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'
         }`}>
           {isPrefetched ? '🚀 Pre-generated Route' : '⚡ Dynamic Route'}
@@ -89,8 +90,8 @@ export default async function Page({ params }: PageProps) {
             <div>
               <strong className="text-gray-700 dark:text-gray-300">Route Type:</strong>
               <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                {isPrefetched 
-                  ? 'Generated at build time via generateStaticParams()' 
+                {isPrefetched
+                  ? 'Generated at build time via generateStaticParams()'
                   : 'Generated on-demand via ISR'
                 }
               </div>
